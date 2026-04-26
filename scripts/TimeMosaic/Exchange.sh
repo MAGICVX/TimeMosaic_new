@@ -1,12 +1,12 @@
-model_name=TimeMosaic
+model_name=TimeMosaic_new
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
   --model_id Exchange_320_96 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --seq_len 320 \
@@ -23,12 +23,12 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
   --model_id Exchange_320_192 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \
@@ -46,12 +46,12 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
   --model_id Exchange_320_336 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \
@@ -66,15 +66,15 @@ python -u run.py \
   --c_out 8 \
   --n_heads 4 \
   --des 'Exp' \
-  --itr 1 \
+  --itr 1 
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
   --model_id Exchange_320_720 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 MAX_JOBS=4
-TOTAL_GPUS=2
+TOTAL_GPUS=1
 MAX_RETRIES=1
 
 mkdir -p logs
 > failures.txt
 
-declare -a models=("TimeMosaic" "SimpleTM" "TimeFilter" "xPatch" "PatchMLP" "Duet" "iTransformer" "TimeMixer" "PatchTST" "DLinear" "FreTS" "LightTS")
+declare -a models=("TimeMosaic_new" "TimeMosaic")
 
 datasets=(
   "ETTh1 ./dataset/ETT-small/ ETTh1.csv 7 ETTh1"
@@ -101,6 +101,7 @@ for model_name in "${models[@]}"; do
           --des Exp \
           --n_heads $n_heads \
           --d_model $d_model \
+          --use_recursive_hidden \
           --d_ff $d_ff \
           --itr 1"
 

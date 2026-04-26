@@ -96,6 +96,14 @@ class Exp_TimeMosaic(Exp_Basic):
         if self.args.use_amp:
             scaler = torch.cuda.amp.GradScaler()
 
+        accumulation_steps = getattr(self.args, 'accumulation_steps', 1)
+
+        # auxiliary loss weights
+        lam_boundary   = getattr(self.args, 'lambda_boundary',   0.01)
+        lam_gradient   = getattr(self.args, 'lambda_gradient',   0.01)
+        lam_spectral   = getattr(self.args, 'lambda_spectral',   0.001)
+        lam_multiscale = getattr(self.args, 'lambda_multiscale', 0.1)
+
         for epoch in range(self.args.train_epochs):
             iter_count = 0
             train_loss = []
@@ -104,7 +112,9 @@ class Exp_TimeMosaic(Exp_Basic):
             epoch_time = time.time()
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
                 iter_count += 1
-                model_optim.zero_grad()
+                # Only zero gradients at the start of accumulation cycle
+                if (i + 1) % accumulation_steps == 0 or (i + 1) == train_steps:
+                    model_optim.zero_grad()
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
                 batch_x_mark = batch_x_mark.float().to(self.device)
@@ -128,23 +138,36 @@ class Exp_TimeMosaic(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        outputs, cls_pred, dec_mask = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
-                        
+                        outputs, cls_pred, dec_mask, aux_losses = self.model(
+                            batch_x, batch_x_mark, dec_inp, batch_y_mark, mask, y_target=batch_y
+                        )
+
                         counts = torch.bincount(cls_pred, minlength=3).float()
                         current_ratio = counts / counts.sum()
-                        
+
                         f_dim = -1 if self.args.features == 'MS' else 0
                         outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                        batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                        batch_y_pred = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
                         lambda_cls = 0.01
+
+                        main_loss = criterion(outputs, batch_y_pred)
+                        loss = main_loss + lambda_cls * criterion(current_ratio, current_ratio.fill_(1/3))
+
                         if self.args.mask_ratio > 0:
-                            loss = criterion(outputs, batch_y) + lambda_cls * criterion(current_ratio, current_ratio.fill_(1/3)) + criterion(batch_x, dec_mask)
-                        else:
-                            loss = criterion(outputs, batch_y) + lambda_cls * criterion(current_ratio, current_ratio.fill_(1/3))
+                            loss = loss + criterion(batch_x, dec_mask)
+
+                        if aux_losses:
+                            loss = (loss
+                                  + lam_boundary   * aux_losses.get('boundary', 0)
+                                  + lam_gradient   * aux_losses.get('gradient', 0)
+                                  + lam_spectral   * aux_losses.get('spectral', 0)
+                                  + lam_multiscale * aux_losses.get('multiscale', 0))
+
                         train_loss.append(loss.mean().item())
                 else:
-                    outputs, cls_pred, dec_mask = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
-
+                    outputs, cls_pred, dec_mask, aux_losses = self.model(
+                        batch_x, batch_x_mark, dec_inp, batch_y_mark, mask, y_target=batch_y
+                    )
 
                     if self.args.model == "TimeMosaic":
                         cls_soft = self.model.patch_embedding.latest_cls_soft  # [N, num_classes]
@@ -158,14 +181,21 @@ class Exp_TimeMosaic(Exp_Basic):
 
                     f_dim = -1 if self.args.features == 'MS' else 0
                     outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                    batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                    batch_y_pred = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
 
                     lambda_cls = 0.001
-                    # lambda_cls = 0
+                    main_loss = criterion(outputs, batch_y_pred)
+                    loss = main_loss + lambda_cls * loss_reg
+
                     if self.args.mask_ratio > 0:
-                        loss = criterion(outputs, batch_y) + lambda_cls * loss_reg + lambda_cls * criterion(batch_x[mask], dec_mask[mask])
-                    else:
-                        loss = criterion(outputs, batch_y) + lambda_cls * loss_reg
+                        loss = loss + lambda_cls * criterion(batch_x[mask], dec_mask[mask])
+
+                    if aux_losses:
+                        loss = (loss
+                              + lam_boundary   * aux_losses.get('boundary', 0)
+                              + lam_gradient   * aux_losses.get('gradient', 0)
+                              + lam_spectral   * aux_losses.get('spectral', 0)
+                              + lam_multiscale * aux_losses.get('multiscale', 0))
 
                     train_loss.append(loss.mean().item())
 
@@ -177,15 +207,18 @@ class Exp_TimeMosaic(Exp_Basic):
                     iter_count = 0
                     time_now = time.time()
 
-                
+                # Scale loss for gradient accumulation
+                loss = loss / accumulation_steps
+
                 if self.args.use_amp:
                     scaler.scale(loss).backward()
-                    scaler.step(model_optim)
-                    scaler.update()
+                    if (i + 1) % accumulation_steps == 0 or (i + 1) == train_steps:
+                        scaler.step(model_optim)
+                        scaler.update()
                 else:
-                    # loss.backward()
                     loss.mean().backward()
-                    model_optim.step()
+                    if (i + 1) % accumulation_steps == 0 or (i + 1) == train_steps:
+                        model_optim.step()
 
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
             train_loss = np.average(train_loss)
@@ -295,12 +328,12 @@ class Exp_TimeMosaic(Exp_Basic):
 
         mae, mse, rmse, mape, mspe, _ = metric(preds, trues)
         print('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
-        # f = open("result_long_term_forecast.txt", 'a')
-        # f.write(setting + "  \n")
-        # f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
-        # f.write('\n')
-        # f.write('\n')
-        # f.close()
+        f = open("result_moreLoss_version.txt", 'a')
+        f.write(setting + "  \n")
+        f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
+        f.write('\n')
+        f.write('\n')
+        f.close()
 
         # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
         # np.save(folder_path + 'pred.npy', preds)

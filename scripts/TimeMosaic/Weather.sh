@@ -1,12 +1,12 @@
-model_name=TimeMosaic
+model_name=TimeMosaic_new
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_96 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \
@@ -25,12 +25,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_192 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \
@@ -49,12 +49,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_336 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \
@@ -73,14 +73,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
-  --use_multi_gpu \
-  --devices 0,1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_720 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data custom \
   --features M \
   --channel CDA \

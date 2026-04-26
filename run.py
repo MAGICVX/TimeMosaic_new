@@ -80,6 +80,7 @@ if __name__ == '__main__':
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
     parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
+    parser.add_argument('--accumulation_steps', type=int, default=1, help='gradient accumulation steps')
     parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
     parser.add_argument('--des', type=str, default='test', help='exp description')
@@ -115,7 +116,6 @@ if __name__ == '__main__':
     parser.add_argument('--pre720', type=int, default=240, help='')
     parser.add_argument('--pre12', type=int, default=6, help='')
     parser.add_argument('--counts', type=int, default=0, help='')
-
 
     # SimpleTM
     parser.add_argument('--kernel_size', default=None, help='Specify the length of randomly initialized wavelets (if not None)')

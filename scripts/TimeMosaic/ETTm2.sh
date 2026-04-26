@@ -1,12 +1,12 @@
-model_name=TimeMosaic
+model_name=TimeMosaic_new
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
   --model_id ETTm2_320_96 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data ETTm2 \
   --features M \
   --channel CDA \
@@ -24,12 +24,12 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
   --model_id ETTm2_320_192 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data ETTm2 \
   --features M \
   --channel CDA \
@@ -47,14 +47,15 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
   --model_id ETTm2_320_336 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data ETTm2 \
   --features M \
+  --channel CDA \
   --seq_len 320 \
   --label_len 48 \
   --pred_len 336 \
@@ -69,12 +70,12 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic \
+  --task_name TimeMosaic_new \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
   --model_id ETTm2_320_720 \
-  --model $model_name \
+  --model TimeMosaic_new \
   --data ETTm2 \
   --features M \
   --channel CDA \
@@ -90,3 +91,4 @@ python -u run.py \
   --des 'Exp' \
   --n_heads 2 \
   --itr 1
+

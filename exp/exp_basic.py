@@ -3,7 +3,7 @@ import torch
 from models import PatchTST, SimpleTM, iTransformer, TimeMixer, FreTS, WPMixer, DLinear, TimesNet,\
             Duet, PatchMLP, TimeFilter, xPatch, PathFormer, TimeMixerPP, Autoformer, FEDformer, \
             Informer, LightTS, Reformer, ETSformer, Pyraformer, MICN, Crossformer, TiDE, TSMixer, \
-            SegRNN, SCINet, TimeMosaic, Mosaic
+            SegRNN, SCINet, TimeMosaic, Mosaic, TimeMosaic_new
 
 class Exp_Basic(object):
     def __init__(self, args):
@@ -37,7 +37,8 @@ class Exp_Basic(object):
             'TSMixer': TSMixer,
             'SegRNN': SegRNN,
             "SCINet": SCINet,
-            "TimeMosaic": TimeMosaic
+            "TimeMosaic": TimeMosaic,
+            "TimeMosaic_new": TimeMosaic_new
             }
 
         self.device = self._acquire_device()
