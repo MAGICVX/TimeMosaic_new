@@ -168,68 +168,6 @@ class FlattenHead(nn.Module):
         x = self.dropout(x)
         return x
 
-# ── Auxiliary Loss Functions ──────────────────────────────────────────
-
-def compute_boundary_loss(dec_out_raw, seg_len):
-    """
-    Penalize discontinuities at segment boundaries.
-    Segments are decoded independently; this forces adjacent boundary
-    points to be similar, providing implicit cross-segment regularization.
-    dec_out_raw: [B, C, pred_len] in normalized space.
-    """
-    num_segs = dec_out_raw.shape[-1] // seg_len
-    if num_segs <= 1:
-        return torch.tensor(0.0, device=dec_out_raw.device)
-    loss = 0.0
-    for i in range(num_segs - 1):
-        end_i = dec_out_raw[:, :, (i + 1) * seg_len - 1]
-        start_next = dec_out_raw[:, :, (i + 1) * seg_len]
-        loss = loss + F.l1_loss(end_i, start_next)
-    return loss / (num_segs - 1)
-
-
-def compute_gradient_loss(pred_raw, y_norm):
-    """
-    First-order + second-order difference loss.
-    Directly supervises trend direction and curvature to prevent
-    long-horizon drift.
-    pred_raw, y_norm: [B, C, pred_len].
-    """
-    pred_d1 = pred_raw[:, :, 1:] - pred_raw[:, :, :-1]
-    true_d1 = y_norm[:, :, 1:] - y_norm[:, :, :-1]
-    loss_d1 = F.l1_loss(pred_d1, true_d1)
-
-    pred_d2 = pred_d1[:, :, 1:] - pred_d1[:, :, :-1]
-    true_d2 = true_d1[:, :, 1:] - true_d1[:, :, :-1]
-    loss_d2 = F.l1_loss(pred_d2, true_d2)
-
-    return loss_d1 + 0.5 * loss_d2
-
-
-def compute_spectral_loss(pred_raw, y_norm):
-    """
-    FFT amplitude-spectrum matching loss.
-    Preserves periodic structure even when point-wise errors accumulate.
-    pred_raw, y_norm: [B, C, pred_len].
-    """
-    pred_fft = torch.fft.rfft(pred_raw.float(), dim=-1)
-    true_fft = torch.fft.rfft(y_norm.float(), dim=-1)
-    return F.l1_loss(torch.abs(pred_fft), torch.abs(true_fft))
-
-
-def compute_multiscale_loss(seg_outputs, y_norm, seg_len):
-    """
-    Per-segment supervision: each segment's output is independently
-    compared to its target slice. Prevents intermediate horizon drift.
-    seg_outputs: list of [B, C, seg_len];  y_norm: [B, C, pred_len].
-    """
-    loss = 0.0
-    for i, seg_out in enumerate(seg_outputs):
-        target = y_norm[:, :, i * seg_len:(i + 1) * seg_len]
-        loss = loss + F.l1_loss(seg_out, target)
-    return loss / len(seg_outputs)
-
-
 class Model(nn.Module):
     def __init__(self, configs, patch_len=16, stride=8):
         super().__init__()
@@ -309,7 +247,7 @@ class Model(nn.Module):
 
 
 
-    def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask, y_target=None):
+    def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask):
         # Normalization from Non-stationary Transformer
         if self.revin:
             x_enc = self.revin_layer(x_enc, 'norm')
@@ -404,9 +342,9 @@ class Model(nn.Module):
             seg_out = self.heads[i](segment_out)
             seg_outputs.append(seg_out)
 
-        # Concatenate all segment outputs: [B, C, pred_len] (normalized space)
-        dec_out_raw = torch.cat(seg_outputs, dim=2)  # [B, C, pred_len]
-        dec_out = dec_out_raw.permute(0, 2, 1)       # → [B, pred_len, C]
+        # Concatenate all segment outputs: [B, C, pred_len]
+        dec_out = torch.cat(seg_outputs, dim=2)
+        dec_out = dec_out.permute(0, 2, 1)  # → [B, pred_len, C]
 
         # De-normalize
         if self.revin:
@@ -415,24 +353,11 @@ class Model(nn.Module):
             dec_out = dec_out * stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1)
             dec_out = dec_out + means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1)
 
-        # ── Compute auxiliary losses (training only) ──
-        aux_losses = {}
-        if self.training and y_target is not None and not self.revin:
-            y_norm = (y_target[:, -self.pred_len:, :] - means) / (stdev + 1e-5)
-            y_norm = y_norm.permute(0, 2, 1)  # [B, C, pred_len]
+        return dec_out, cls_pred, dec_mask
 
-            aux_losses['boundary']   = compute_boundary_loss(dec_out_raw, self.seg_len)
-            aux_losses['gradient']   = compute_gradient_loss(dec_out_raw, y_norm)
-            aux_losses['spectral']   = compute_spectral_loss(dec_out_raw, y_norm)
-            aux_losses['multiscale'] = compute_multiscale_loss(seg_outputs, y_norm, self.seg_len)
-
-        return dec_out, cls_pred, dec_mask, aux_losses
-
-    def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None, y_target=None):
-        dec_out, cls_pred, dec_mask, aux_losses = self.forecast(
-            x_enc, x_mark_enc, x_dec, x_mark_dec, mask, y_target
-        )
+    def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None):
+        dec_out, cls_pred, dec_mask = self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec, mask)
         if self.training > 0:
-            return dec_out[:, -self.pred_len:, :], cls_pred, dec_mask, aux_losses
+            return dec_out[:, -self.pred_len:, :], cls_pred, dec_mask
         else:
             return dec_out[:, -self.pred_len:, :], cls_pred
