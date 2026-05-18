@@ -18,9 +18,9 @@ os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 warnings.filterwarnings('ignore')
 
 
-class Exp_TimeMosaic(Exp_Basic):
+class Exp_TimeMosaic_MoE(Exp_Basic):
     def __init__(self, args):
-        super(Exp_TimeMosaic, self).__init__(args)
+        super(Exp_TimeMosaic_MoE, self).__init__(args)
 
     def _build_model(self):
         model = self.model_dict[self.args.model].Model(self.args).float()
@@ -40,7 +40,7 @@ class Exp_TimeMosaic(Exp_Basic):
     def _select_criterion(self):
         criterion = nn.L1Loss()
         return criterion
- 
+
 
     def vali(self, vali_data, vali_loader, criterion):
         total_loss = []
@@ -117,7 +117,7 @@ class Exp_TimeMosaic(Exp_Basic):
                 # decoder input
                 dec_inp = torch.zeros_like(batch_y[:, -self.args.pred_len:, :]).float()
                 dec_inp = torch.cat([batch_y[:, :self.args.label_len, :], dec_inp], dim=1).float().to(self.device)
-                
+
                 if self.args.mask_ratio > 0:
                     B, T, C = batch_x.shape
                     mask = torch.rand(B, T, C, device=batch_x.device) < self.args.mask_ratio
@@ -128,15 +128,16 @@ class Exp_TimeMosaic(Exp_Basic):
                     mask = mask.unsqueeze(-1).expand(-1, -1, self.args.d_model)
                 else:
                     mask = None
-                    
+
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        outputs, cls_pred, dec_mask = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
-                        
+                        outputs, cls_pred, dec_mask, moe_routing_weights = self.model(
+                            batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
+
                         counts = torch.bincount(cls_pred, minlength=3).float()
                         current_ratio = counts / counts.sum()
-                        
+
                         f_dim = -1 if self.args.features == 'MS' else 0
                         outputs = outputs[:, -self.args.pred_len:, f_dim:]
                         batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
@@ -145,10 +146,13 @@ class Exp_TimeMosaic(Exp_Basic):
                             loss = criterion(outputs, batch_y) + lambda_cls * criterion(current_ratio, current_ratio.fill_(1/3)) + criterion(batch_x, dec_mask)
                         else:
                             loss = criterion(outputs, batch_y) + lambda_cls * criterion(current_ratio, current_ratio.fill_(1/3))
+
+                        # MoE load balancing loss
+                        loss = loss + self._compute_moe_loss(criterion, moe_routing_weights)
                         train_loss.append(loss.mean().item())
                 else:
-                    outputs, cls_pred, dec_mask = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
-
+                    outputs, cls_pred, dec_mask, moe_routing_weights = self.model(
+                        batch_x, batch_x_mark, dec_inp, batch_y_mark, mask)
 
                     if self.args.model == "TimeMosaic":
                         cls_soft = self.model.patch_embedding.latest_cls_soft  # [N, num_classes]
@@ -170,6 +174,8 @@ class Exp_TimeMosaic(Exp_Basic):
                     else:
                         loss = criterion(outputs, batch_y) + lambda_cls * loss_reg
 
+                    # MoE load balancing loss
+                    loss = loss + self._compute_moe_loss(criterion, moe_routing_weights)
                     train_loss.append(loss.mean().item())
 
                 if (i + 1) % 100 == 0:
@@ -204,14 +210,31 @@ class Exp_TimeMosaic(Exp_Basic):
             if early_stopping.early_stop:
                 print("Early stopping")
                 break
-            
+
             adjust_learning_rate(model_optim, epoch, self.args)
 
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
 
         return self.model
-    
+
+    def _compute_moe_loss(self, criterion, moe_routing_weights):
+        """Compute load balancing loss for MoE prompt generator."""
+        lam_moe = getattr(self.args, 'lam_moe', 0.001)
+        if moe_routing_weights is None:
+            return torch.tensor(0., device=self.device)
+
+        moe_loss = torch.tensor(0., device=self.device)
+        num_segs = moe_routing_weights.shape[0]
+        for seg_idx in range(num_segs):
+            seg_weights = moe_routing_weights[seg_idx]  # [B*C, num_experts]
+            expert_usage = seg_weights.mean(dim=0)
+            target_usage = torch.full_like(expert_usage,
+                                          1.0 / self.args.num_moe_experts)
+            moe_loss = moe_loss + criterion(expert_usage, target_usage)
+        moe_loss = moe_loss / num_segs
+        return lam_moe * moe_loss
+
     def test(self, setting, test=0):
         test_data, test_loader = self._get_data(flag='test')
         if test:
@@ -241,9 +264,9 @@ class Exp_TimeMosaic(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        outputs, cls_pred  = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                        outputs, cls_pred = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
                 else:
-                    outputs, cls_pred  = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                    outputs, cls_pred = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
 
                 f_dim = -1 if self.args.features == 'MS' else 0
                 outputs = outputs[:, -self.args.pred_len:, :]
@@ -301,7 +324,7 @@ class Exp_TimeMosaic(Exp_Basic):
 
         mae, mse, rmse, mape, mspe, _ = metric(preds, trues)
         print('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
-        f = open("result_long_term_forecast.txt", 'a')
+        f = open("result_TimeMosaic_MOE.txt", 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
         f.write('\n')
@@ -311,16 +334,16 @@ class Exp_TimeMosaic(Exp_Basic):
         # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
         # np.save(folder_path + 'pred.npy', preds)
         # np.save(folder_path + 'true.npy', trues)
-        
+
         self.profile_model(test_loader)
-        
+
         # best_model_path = os.path.join('./checkpoints/' + setting, 'checkpoint.pth')
         # if os.path.exists(best_model_path):
         #     os.remove(best_model_path)
         #     print(f"Deleted model checkpoint at: {best_model_path}")
 
         return
-    
+
     def profile_model(self, test_loader):
         self.model.eval()
         with torch.no_grad():

@@ -124,7 +124,7 @@ class Exp_TimeMosaic(Exp_Basic):
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
                 iter_count += 1
                 # Only zero gradients at the start of accumulation cycle
-                if (i + 1) % accumulation_steps == 0 or (i + 1) == train_steps:
+                if i % accumulation_steps == 0:
                     model_optim.zero_grad()
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
