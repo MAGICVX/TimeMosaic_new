@@ -1,0 +1,125 @@
+model_name=TimeMosaic_Fusion
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_96 \
+  --model TimeMosaic_Fusion \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 96 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 2 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --batch_size 16 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_192 \
+  --model TimeMosaic_Fusion \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 192 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 2 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --batch_size 16 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_336 \
+  --model TimeMosaic_Fusion \
+  --data custom \
+  --features M \
+  --channel 'CI+' \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 336 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 2 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --batch_size 16 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_720 \
+  --model TimeMosaic_Fusion \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 720 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 2 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --batch_size 16 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --itr 1

@@ -4,6 +4,8 @@ import torch
 import torch.backends
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 from exp.exp_TimeMosaic import Exp_TimeMosaic
+from exp.exp_TimeMosaic_MoE import Exp_TimeMosaic_MoE
+from exp.exp_Fusion import Exp_Fusion
 from exp.exp_TimeFilter import Exp_TimeFilter
 from exp.exp_PathFormer import Exp_PathFormer
 from exp.exp_DUET import Exp_DUET
@@ -116,6 +118,18 @@ if __name__ == '__main__':
     parser.add_argument('--pre720', type=int, default=240, help='')
     parser.add_argument('--pre12', type=int, default=6, help='')
     parser.add_argument('--counts', type=int, default=0, help='')
+    parser.add_argument('--num_moe_experts', type=int, default=8,
+                        help='Number of virtual experts per segment in MoE prompt generator')
+    parser.add_argument('--lam_moe', type=float, default=0.001,
+                        help='Weight of MoE load balancing loss')
+    parser.add_argument('--num_moe_prefix_experts', type=int, default=4,
+                        help='Number of virtual experts in MoE prefix generator')
+    parser.add_argument('--prefix_len', type=int, default=4,
+                        help='Number of prefix tokens per layer for K/V injection')
+    parser.add_argument('--lam_prefix_moe', type=float, default=0.001,
+                        help='Weight of MoE prefix load balancing loss')
+    parser.add_argument('--use_prefix', type=int, default=1,
+                        help='Enable prefix attention K/V injection (0/1)')
 
     # SimpleTM
     parser.add_argument('--kernel_size', default=None, help='Specify the length of randomly initialized wavelets (if not None)')
@@ -208,6 +222,10 @@ if __name__ == '__main__':
         Exp = Exp_PathFormer
     elif args.task_name == 'Exp_DUET':
         Exp = Exp_DUET
+    elif args.task_name == 'Exp_TimeMosaic_MoE':
+        Exp = Exp_TimeMosaic_MoE
+    elif args.task_name == 'Exp_Fusion':
+        Exp = Exp_Fusion
     else:
         Exp = Exp_TimeMosaic
 
@@ -216,9 +234,18 @@ if __name__ == '__main__':
             # setting record of experiments
             exp = Exp(args)  # set experiments
             setting = '{}_{}_{}_{}_fixed{}_{}_{}_{}'.format(args.task_name, args.model_id, args.model, args.d_ff, args.fixed_weight, args.learning_rate, args.scale_rate, args.channel)
+            if args.task_name == 'Exp_TimeMosaic_MoE':
+                setting += '_E{}_lmoe{}'.format(getattr(args, 'num_moe_experts', 8), getattr(args, 'lam_moe', 0.001))
+            if args.task_name == 'Exp_Fusion':
+                setting += '_E{}_lmoe{}_pfxE{}_plen{}_lamPrefixMoe{}'.format(
+                    getattr(args, 'num_moe_experts', 8),
+                    getattr(args, 'lam_moe', 0.001),
+                    getattr(args, 'num_moe_prefix_experts', 4),
+                    getattr(args, 'prefix_len', 4),
+                    getattr(args, 'lam_prefix_moe', 0.001))
+
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
-            # print(args.input_scale_rate)
-            # raise ValueError
+
             exp.train(setting)
 
             print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
