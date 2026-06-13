@@ -1,0 +1,105 @@
+=== Grid Search Orthogonal Loss: Tue May 19 08:46:55 PM CST 2026 ===
+Fixed: lam_entropy=0.03  lam_diversity=0.008
+Scanning: lam_orthogonal = 0.0 0.001 0.005 0.01 0.02 0.05 0.1
+
+  Exchange     lam_orth=0.0    mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.001  mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.005  mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.01   mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.02   mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.05   mse=N/A        mae=N/A       
+  Exchange     lam_orth=0.1    mse=N/A        mae=N/A       
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.0_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.0
+mse:0.10891885310411453, mae:0.2381533682346344, rmse:0.33002856373786926, mape:1.53297758102417, mspe:1256.270751953125
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.001_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.001
+mse:0.1020892858505249, mae:0.23228542506694794, rmse:0.31951412558555603, mape:1.4454351663589478, mspe:1123.712646484375
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.005_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.005
+mse:0.10278346389532089, mae:0.22987918555736542, rmse:0.3205986022949219, mape:1.4503861665725708, mspe:1202.3741455078125
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.01_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.01
+mse:0.10058197379112244, mae:0.22948689758777618, rmse:0.3171465992927551, mape:1.3847349882125854, mspe:1073.67919921875
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.02_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.02
+mse:0.09637365490198135, mae:0.2223430871963501, rmse:0.3104410767555237, mape:1.3579668998718262, mspe:1055.1971435546875
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.05_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.05
+mse:0.10139219462871552, mae:0.23052875697612762, rmse:0.3184214234352112, mape:1.3989336490631104, mspe:1122.0191650390625
+
+TimeMosaic_new_GS_Exchange_320_96_orth0.1_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.1
+mse:0.1023513600230217, mae:0.2310558706521988, rmse:0.319923996925354, mape:1.4788249731063843, mspe:1195.1878662109375
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.0_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.0
+mse:0.3698337972164154, mae:0.38542094826698303, rmse:0.6081396341323853, mape:9.56202220916748, mspe:42108.26953125
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.001_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.001
+mse:0.3700141906738281, mae:0.38554179668426514, rmse:0.6082879304885864, mape:9.558408737182617, mspe:42121.73828125
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.005_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.005
+mse:0.3698674440383911, mae:0.385384738445282, rmse:0.608167290687561, mape:9.54712963104248, mspe:41938.5
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.01_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.01
+mse:0.3698097765445709, mae:0.3854859173297882, rmse:0.6081198453903198, mape:9.559382438659668, mspe:42035.6640625
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.02_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.02
+mse:0.3698881268501282, mae:0.3854013681411743, rmse:0.608184278011322, mape:9.548293113708496, mspe:41968.95703125
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.05_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.05
+mse:0.36995479464530945, mae:0.38551065325737, rmse:0.6082391142845154, mape:9.548615455627441, mspe:41995.9140625
+
+TimeMosaic_new_GS_ETTh1_96_96_orth0.1_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.1
+mse:0.3717503547668457, mae:0.38557910919189453, rmse:0.6097133159637451, mape:9.284687995910645, mspe:39833.80078125
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.0_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.0
+mse:0.4199535548686981, mae:0.41443297266960144, rmse:0.6480382084846497, mape:9.48551082611084, mspe:36375.76953125
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.001_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.001
+mse:0.4196194112300873, mae:0.41436493396759033, rmse:0.6477803587913513, mape:9.488382339477539, mspe:36330.26953125
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.005_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.005
+mse:0.41976332664489746, mae:0.41438645124435425, rmse:0.6478914618492126, mape:9.498842239379883, mspe:36442.7421875
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.01_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.01
+mse:0.4203512668609619, mae:0.4144396185874939, rmse:0.6483449935913086, mape:9.49032211303711, mspe:36401.2890625
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.02_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.02
+mse:0.4197053015232086, mae:0.41456523537635803, rmse:0.6478466391563416, mape:9.499619483947754, mspe:36393.1796875
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.05_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.05
+mse:0.4196627736091614, mae:0.41452592611312866, rmse:0.6478138566017151, mape:9.486083984375, mspe:36322.640625
+
+TimeMosaic_new_GS_ETTh1_96_192_orth0.1_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CI | lam_e=0.03 lam_d=0.008 lam_o=0.1
+mse:0.4202209413051605, mae:0.4145928621292114, rmse:0.6482445001602173, mape:9.48952865600586, mspe:36385.57421875
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.0_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.0
+mse:0.4964325428009033, mae:0.4581662714481354, rmse:0.7045797109603882, mape:9.95496654510498, mspe:39223.2578125
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.001_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.001
+mse:0.4960242807865143, mae:0.4578392803668976, rmse:0.7042899131774902, mape:9.96321964263916, mspe:39340.015625
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.005_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.005
+mse:0.4967241585254669, mae:0.45861178636550903, rmse:0.7047865986824036, mape:9.96343994140625, mspe:39201.625
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.01_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.01
+mse:0.49645939469337463, mae:0.4581679105758667, rmse:0.7045987248420715, mape:9.955129623413086, mspe:39226.46875
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.02_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.02
+mse:0.4960872232913971, mae:0.45803651213645935, rmse:0.7043346166610718, mape:9.953381538391113, mspe:39228.08984375
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.05_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.05
+mse:0.4963821768760681, mae:0.4583299458026886, rmse:0.704543948173523, mape:9.95911979675293, mspe:39206.47265625
+
+TimeMosaic_new_GS_ETTh1_96_336_orth0.1_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CDA | lam_e=0.03 lam_d=0.008 lam_o=0.1
+mse:0.49602216482162476, mae:0.4580150842666626, rmse:0.7042884230613708, mape:9.948942184448242, mspe:39203.41796875
+
+TimeMosaic_new_GS_ETTh1_96_720_orth0.0_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CD | lam_e=0.03 lam_d=0.008 lam_o=0.0
+mse:0.47402647137641907, mae:0.46146368980407715, rmse:0.6884958148002625, mape:10.04328727722168, mspe:41151.06640625
+
+TimeMosaic_new_GS_ETTh1_96_720_orth0.001_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CD | lam_e=0.03 lam_d=0.008 lam_o=0.001
+mse:0.47381991147994995, mae:0.4613538682460785, rmse:0.6883457899093628, mape:10.048346519470215, mspe:41214.35546875
+
+TimeMosaic_new_GS_ETTh1_96_72 0_orth0.005_TimeMosaic_new_2048_fixedFalse_0.0001_0.001_CD | lam_e=0.03 lam_d=0.008 lam_o=0.005
+mse:0.4743027687072754, mae:0.4615824818611145, rmse:0.6886964440345764, mape:10.048242568969727, mspe:41177.93359375
+

@@ -86,9 +86,10 @@ for task_cfg in "${TASKS[@]}"; do
                 --lam_moe 0.001 \
                 --prefix_len 4 \
                 --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
                 --num_moe_experts "$E" \
                 --num_moe_prefix_experts "$pfxE" \
-                --result_file "$RESULT_FILE"
 
             result_line=$(grep -A1 "${model_id}_${des}" "$RESULT_FILE" | tail -1 | grep 'mse:')
             mse=$(echo "$result_line" | grep -oP '\bmse:\K[0-9.]+' || echo "N/A")
