@@ -1,0 +1,124 @@
+model_name=TimeMosaic_MoE
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_96_96 \
+  --model TimeMosaic_MoE \
+  --data ETTh1 \
+  --features M \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 96 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_96_192 \
+  --model TimeMosaic_MoE \
+  --data ETTh1 \
+  --features M \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 192 \
+  --e_layers 3 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 1 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_96_336 \
+  --model TimeMosaic_MoE \
+  --data ETTh1 \
+  --features M \
+  --channel CDA \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 336 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 16 \
+  --num_moe_experts 4 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_96_720 \
+  --model TimeMosaic_MoE \
+  --data ETTh1 \
+  --features M \
+  --channel CD \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 720 \
+  --e_layers 3 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 2 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
+
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_320_96 \
+  --model TimeMosaic_MoE \
+  --data ETTh1 \
+  --features M \
+  --seq_len 320 \
+  --label_len 48 \
+  --pred_len 96 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1

@@ -1,0 +1,109 @@
+model_name=TimeMosaic_MoE
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_96 \
+  --model TimeMosaic_MoE \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 96 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --batch_size 16 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_192 \
+  --model TimeMosaic_MoE \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 192 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --batch_size 16 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_336 \
+  --model TimeMosaic_MoE \
+  --data custom \
+  --features M \
+  --channel CI+ \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 336 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --batch_size 16 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_TimeMosaic_MoE \
+  --is_training 1 \
+  --use_multi_gpu \
+  --devices 0,1,2,3 \
+  --root_path ./dataset/electricity/ \
+  --data_path electricity.csv \
+  --model_id ECL_96_720 \
+  --model TimeMosaic_MoE \
+  --data custom \
+  --features M \
+  --channel CDP \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 720 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 321 \
+  --dec_in 321 \
+  --c_out 321 \
+  --des 'Exp' \
+  --batch_size 16 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --itr 1
