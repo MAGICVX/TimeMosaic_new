@@ -7,8 +7,6 @@ from exp.exp_TimeMosaic import Exp_TimeMosaic
 from exp.exp_new import Exp_TimeMosaic as Exp_TimeMosaic_new
 from exp.exp_TimeMosaic_MoE import Exp_TimeMosaic_MoE
 from exp.exp_Fusion import Exp_Fusion
-from exp.exp_MosaicTimer import Exp_MosaicTimer
-from exp.exp_Fusion_Text import Exp_Fusion_Text
 from exp.exp_TimeFilter import Exp_TimeFilter
 from exp.exp_PathFormer import Exp_PathFormer
 from exp.exp_DUET import Exp_DUET
@@ -143,26 +141,6 @@ if __name__ == '__main__':
     parser.add_argument('--lam_orthogonal', type=float, default=0.01,
                         help='Weight of orthogonal loss on prompt embeddings')
 
-    # MosaicTimer
-    parser.add_argument('--timer_model', type=str, default='thuml/timer-base-84m',
-                        help='Pretrained Timer model name (uses hf-mirror.com)')
-    parser.add_argument('--timer_num_layers', type=int, default=6,
-                        help='Number of top Timer layers to use (frozen)')
-    parser.add_argument('--mixer_layers', type=int, default=1,
-                        help='Number of bidirectional mixer layers after Timer')
-    parser.add_argument('--use_lora', type=int, default=1,
-                        help='Enable LoRA fine-tuning of Timer attention (0/1)')
-    parser.add_argument('--lora_rank', type=int, default=8,
-                        help='LoRA rank for Timer attention adapters')
-    parser.add_argument('--lora_alpha', type=int, default=16,
-                        help='LoRA scaling factor (alpha/rank)')
-
-    # Fusion-Text (LLM calendar injection)
-    parser.add_argument('--use_text_llm', type=int, default=0,
-                        help='Enable LLM calendar text injection (0/1)')
-    parser.add_argument('--llm_model', type=str, default='prajjwal1/bert-mini',
-                        help='LLM model for calendar text (BERT-mini recommended)')
-
     # SimpleTM
     parser.add_argument('--kernel_size', default=None, help='Specify the length of randomly initialized wavelets (if not None)')
     parser.add_argument('--alpha', type=float, default=1, help='Weight of the inner product score in geometric attention')
@@ -258,10 +236,6 @@ if __name__ == '__main__':
         Exp = Exp_TimeMosaic_MoE
     elif args.task_name == 'Exp_Fusion':
         Exp = Exp_Fusion
-    elif args.task_name == 'Exp_MosaicTimer':
-        Exp = Exp_MosaicTimer
-    elif args.task_name == 'Exp_Fusion_Text':
-        Exp = Exp_Fusion_Text
     elif args.task_name == 'TimeMosaic_new':
         Exp = Exp_TimeMosaic_new
     else:
@@ -274,14 +248,14 @@ if __name__ == '__main__':
             setting = '{}_{}_{}_{}_fixed{}_{}_{}_{}'.format(args.task_name, args.model_id, args.model, args.d_ff, args.fixed_weight, args.learning_rate, args.scale_rate, args.channel)
             if args.task_name == 'Exp_TimeMosaic_MoE':
                 setting += '_E{}_lmoe{}'.format(getattr(args, 'num_moe_experts', 8), getattr(args, 'lam_moe', 0.001))
-            if args.task_name in ('Exp_Fusion', 'Exp_Fusion_Text', 'Exp_MosaicTimer'):
+            if args.task_name == 'Exp_Fusion':
                 setting += '_E{}_lmoe{}_pfxE{}_plen{}_lamPrefixMoe{}'.format(
                     getattr(args, 'num_moe_experts', 8),
                     getattr(args, 'lam_moe', 0.001),
                     getattr(args, 'num_moe_prefix_experts', 4),
                     getattr(args, 'prefix_len', 4),
                     getattr(args, 'lam_prefix_moe', 0.001))
-            if args.task_name in ('Exp_Fusion', 'Exp_Fusion_Text') and getattr(args, 'freq_num', 4) != 4:
+            if args.task_name == 'Exp_Fusion' and getattr(args, 'freq_num', 4) != 4:
                 setting += '_freq{}'.format(getattr(args, 'freq_num', 4))
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
 

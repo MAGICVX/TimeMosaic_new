@@ -29,7 +29,5 @@ from . import TimeMosaic
 from . import Mosaic
 from . import TimeMosaic_new
 from . import TimeMosaic_Fusion
-from . import MosaicTimer
-from . import TimeMosaic_Fusion_Text
 
 

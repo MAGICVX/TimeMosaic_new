@@ -4,7 +4,7 @@ from models import PatchTST, SimpleTM, iTransformer, TimeMixer, FreTS, WPMixer, 
             Duet, PatchMLP, TimeFilter, xPatch, PathFormer, TimeMixerPP, Autoformer, FEDformer, \
             Informer, LightTS, Reformer, ETSformer, Pyraformer, MICN, Crossformer, TiDE, TSMixer, \
             SegRNN, SCINet, TimeMosaic, Mosaic, TimeMosaic_new, \
-            TimeMosaic_MoE, TimeMosaic_Fusion, MosaicTimer, TimeMosaic_Fusion_Text
+            TimeMosaic_MoE, TimeMosaic_Fusion
 
 class Exp_Basic(object):
     def __init__(self, args):
@@ -42,8 +42,6 @@ class Exp_Basic(object):
             "TimeMosaic_new": TimeMosaic_new,
             "TimeMosaic_MoE": TimeMosaic_MoE,
             "TimeMosaic_Fusion": TimeMosaic_Fusion,
-            "MosaicTimer": MosaicTimer,
-            "TimeMosaic_Fusion_Text": TimeMosaic_Fusion_Text,
             }
 
         self.device = self._acquire_device()
