@@ -1,5 +1,5 @@
 
-model_name=TimeMosaic_MIM
+model_name=TimeMosaic
 
 python -u run.py \
   --task_name Exp_TimeMosaic_MIM \
@@ -7,7 +7,7 @@ python -u run.py \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTh1.csv \
   --model_id ETTh1_96_96  \
-  --model TimeMosaic_MIM \
+  --model TimeMosaic \
   --data ETTh1 \
   --features M \
   --seq_len 96 \
@@ -30,7 +30,7 @@ python -u run.py \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTh1.csv \
   --model_id ETTh1_96_192 \
-  --model TimeMosaic_MIM \
+  --model TimeMosaic \
   --data ETTh1 \
   --features M \
   --seq_len 96 \
@@ -52,7 +52,7 @@ python -u run.py \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTh1.csv \
   --model_id ETTh1_96_336 \
-  --model TimeMosaic_MIM \
+  --model TimeMosaic \
   --data ETTh1 \
   --features M \
   --channel CDA \
@@ -75,7 +75,7 @@ python -u run.py \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTh1.csv \
   --model_id ETTh1_96_720 \
-  --model TimeMosaic_MIM \
+  --model TimeMosaic \
   --data ETTh1 \
   --features M \
   --channel CD \
