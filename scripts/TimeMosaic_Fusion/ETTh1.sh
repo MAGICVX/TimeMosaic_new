@@ -25,8 +25,6 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --batch_size 4 \
-  --accumulation_steps 8 \
   --itr 1
 
 python -u run.py \
@@ -134,6 +132,61 @@ python -u run.py \
   --des 'Exp' \
   --n_heads 8 \
   --num_moe_experts 6 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 4 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_320_192 \
+  --model TimeMosaic_Fusion \
+  --data ETTh1 \
+  --features M \
+  --seq_len 320 \
+  --label_len 48 \
+  --pred_len 192 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 8 \
+  --num_moe_experts 8 \
+  --lam_moe 0.001 \
+  --num_moe_prefix_experts 4 \
+  --prefix_len 4 \
+  --lam_prefix_moe 0.001 \
+  --itr 1
+
+python -u run.py \
+  --task_name Exp_Fusion \
+  --is_training 1 \
+  --root_path ./dataset/ETT-small/ \
+  --data_path ETTh1.csv \
+  --model_id ETTh1_320_336 \
+  --model TimeMosaic_Fusion \
+  --data ETTh1 \
+  --features M \
+  --channel CDA \
+  --seq_len 320 \
+  --label_len 48 \
+  --pred_len 336 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 7 \
+  --dec_in 7 \
+  --c_out 7 \
+  --des 'Exp' \
+  --n_heads 16 \
+  --num_moe_experts 8 \
   --lam_moe 0.001 \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
