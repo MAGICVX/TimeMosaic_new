@@ -6,7 +6,7 @@
 # 只调 num_moe_experts 和 num_moe_prefix_experts
 # ============================================================
 
-RESULT_FILE="./result_degraded_grid.txt"
+RESULT_FILE="./result/result_degraded_grid.txt"
 
 MOE_EXPERTS_LIST=(2 3 4 5 6 7 8 9)
 PREFIX_EXPERTS_LIST=(1 2 3 4 5 6)

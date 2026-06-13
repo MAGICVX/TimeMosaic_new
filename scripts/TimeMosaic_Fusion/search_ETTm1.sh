@@ -6,7 +6,7 @@
 # 其他参数和 ETTm1.sh 保持一致
 # ============================================================
 
-RESULT_FILE="./result_ETTm1_grid.txt"
+RESULT_FILE="./result/result_ETTm1_grid.txt"
 
 MOE_EXPERTS_LIST=(2 3 4 5 6 7 8 9)
 PREFIX_EXPERTS_LIST=(1 2 3 4 5 6)

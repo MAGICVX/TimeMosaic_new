@@ -6,8 +6,8 @@
 GPU=0
 MODEL="TimeMosaic"
 TASK="TimeMosaic"
-RESULT_FILE="./result_grid_orthogonal.txt"
-SUMMARY_FILE="./result_grid_orthogonal_summary.txt"
+RESULT_FILE="./result/result_grid_orthogonal.txt"
+SUMMARY_FILE="./result/result_grid_orthogonal_summary.txt"
 
 # Best known values from previous tuning
 LAM_ENTROPY=0.03
