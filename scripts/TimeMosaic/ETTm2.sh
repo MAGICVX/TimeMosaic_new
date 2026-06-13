@@ -1,7 +1,7 @@
 model_name=TimeMosaic
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
@@ -24,7 +24,7 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
@@ -47,7 +47,7 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
@@ -69,7 +69,7 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \

@@ -4,8 +4,8 @@
 # Usage: bash scripts/grid_search_3d.sh
 
 GPU=0
-MODEL="TimeMosaic_MIM"
-TASK="TimeMosaic_MIM"
+MODEL="TimeMosaic"
+TASK="TimeMosaic"
 RESULT_FILE="./result_grid_3d.txt"
 
 LAM_ENTROPY_LIST=("0.01" "0.03" "0.05")

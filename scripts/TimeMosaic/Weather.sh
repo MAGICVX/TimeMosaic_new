@@ -1,7 +1,7 @@
 model_name=TimeMosaic
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
@@ -25,7 +25,7 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
@@ -49,7 +49,7 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
@@ -73,7 +73,7 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name Exp_TimeMosaic_MIM \
+  --task_name Exp_TimeMosaic \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \

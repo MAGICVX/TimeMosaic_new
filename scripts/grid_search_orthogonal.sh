@@ -4,8 +4,8 @@
 # Usage: bash scripts/grid_search_orthogonal.sh
 
 GPU=0
-MODEL="TimeMosaic_MIM"
-TASK="TimeMosaic_MIM"
+MODEL="TimeMosaic"
+TASK="TimeMosaic"
 RESULT_FILE="./result_grid_orthogonal.txt"
 SUMMARY_FILE="./result_grid_orthogonal_summary.txt"
 

@@ -7,7 +7,7 @@ MAX_RETRIES=1
 mkdir -p logs
 > failures.txt
 
-declare -a models=("TimeMosaic_MIM" "TimeMosaic")
+declare -a models=("TimeMosaic" "TimeMosaic")
 
 datasets=(
   "ETTh1 ./dataset/ETT-small/ ETTh1.csv 7 ETTh1"
