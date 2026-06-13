@@ -75,9 +75,9 @@ python -u run.py \
   --dec_in 8 \
   --c_out 8 \
   --n_heads 4 \
-  --num_moe_experts 8 \
+  --num_moe_experts 3 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 4 \
+  --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --des 'Exp' \
@@ -105,7 +105,7 @@ python -u run.py \
   --n_heads 2 \
   --num_moe_experts 8 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 4 \
+  --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --des 'Exp' \

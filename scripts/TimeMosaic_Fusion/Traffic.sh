@@ -21,7 +21,7 @@ python -u run.py \
   --c_out 862 \
   --des 'Exp' \
   --n_heads 8 \
-  --num_moe_experts 4 \
+  --num_moe_experts 6 \
   --lam_moe 0.001 \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
@@ -53,7 +53,7 @@ python -u run.py \
   --c_out 862 \
   --des 'Exp' \
   --n_heads 8 \
-  --num_moe_experts 4 \
+  --num_moe_experts 5 \
   --lam_moe 0.001 \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
@@ -115,7 +115,7 @@ python -u run.py \
   --c_out 862 \
   --des 'Exp' \
   --n_heads 8 \
-  --num_moe_experts 4 \
+  --num_moe_experts 5 \
   --lam_moe 0.001 \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
@@ -148,7 +148,7 @@ python -u run.py \
   --c_out 862 \
   --des 'Exp' \
   --n_heads 8 \
-  --num_moe_experts 8 \
+  --num_moe_experts 9 \
   --lam_moe 0.001 \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
@@ -181,7 +181,7 @@ python -u run.py \
   --n_heads 8 \
   --num_moe_experts 8 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 4 \
+  --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --d_model 512 \

@@ -78,9 +78,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 3 \
-  --num_moe_experts 5 \
+  --num_moe_experts 7 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 2 \
+  --num_moe_prefix_experts 1 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
@@ -108,9 +108,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 4 \
-  --num_moe_experts 6 \
+  --num_moe_experts 3 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 2 \
+  --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
@@ -139,9 +139,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 8 \
-  --num_moe_experts 4 \
+  --num_moe_experts 8 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 3 \
+  --num_moe_prefix_experts 6 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
@@ -168,9 +168,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 1 \
-  --num_moe_experts 2 \
+  --num_moe_experts 8 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 2 \
+  --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
@@ -197,9 +197,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 3 \
-  --num_moe_experts 5 \
+  --num_moe_experts 8 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 2 \
+  --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
@@ -227,9 +227,9 @@ python -u run.py \
   --c_out 7 \
   --des 'Exp' \
   --n_heads 4 \
-  --num_moe_experts 9 \
+  --num_moe_experts 4 \
   --lam_moe 0.001 \
-  --num_moe_prefix_experts 5 \
+  --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
   --freq_num 0 \
