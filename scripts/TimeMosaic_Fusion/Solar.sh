@@ -26,6 +26,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 2048 \
   --learning_rate 0.001 \
@@ -60,6 +62,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 2048 \
   --learning_rate 0.001 \
@@ -94,6 +98,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 2048 \
   --learning_rate 0.001 \
@@ -128,6 +134,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 2048 \
   --learning_rate 0.001 \

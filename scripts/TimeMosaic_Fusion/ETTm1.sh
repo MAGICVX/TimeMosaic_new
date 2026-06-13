@@ -25,8 +25,9 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -53,9 +54,9 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -82,9 +83,9 @@ python -u run.py \
   --num_moe_prefix_experts 1 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -112,9 +113,9 @@ python -u run.py \
   --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 
 
@@ -143,9 +144,9 @@ python -u run.py \
   --num_moe_prefix_experts 6 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -172,9 +173,9 @@ python -u run.py \
   --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -201,9 +202,9 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"
 
 python -u run.py \
   --task_name Exp_Fusion \
@@ -231,6 +232,6 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
-  --freq_num 0 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1 \
-  --result_file "result_Fusion_v3.txt"

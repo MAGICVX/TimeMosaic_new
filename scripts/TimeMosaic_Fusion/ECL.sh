@@ -26,6 +26,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --batch_size 16 \
   --use_multi_gpu \
   --devices 0,1,2,3 \
@@ -57,6 +59,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --batch_size 16 \
   --use_multi_gpu \
   --devices 0,1,2,3 \
@@ -88,6 +92,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --batch_size 16 \
   --use_multi_gpu \
   --devices 0,1,2,3 \
@@ -119,6 +125,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --batch_size 16 \
   --use_multi_gpu \
   --devices 0,1,2,3 \

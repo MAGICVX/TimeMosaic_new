@@ -26,6 +26,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 2 \
@@ -58,6 +60,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -89,6 +93,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -120,6 +126,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -153,6 +161,8 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -184,6 +194,8 @@ python -u run.py \
   --num_moe_prefix_experts 5 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -215,6 +227,8 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \
@@ -246,6 +260,8 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --d_model 512 \
   --d_ff 512 \
   --batch_size 4 \

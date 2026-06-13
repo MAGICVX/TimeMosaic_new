@@ -26,6 +26,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -54,6 +56,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -81,6 +85,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -109,6 +115,8 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -137,6 +145,8 @@ python -u run.py \
   --num_moe_prefix_experts 4 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -165,6 +175,8 @@ python -u run.py \
   --num_moe_prefix_experts 3 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -192,6 +204,8 @@ python -u run.py \
   --num_moe_prefix_experts 3 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
 
 python -u run.py \
@@ -220,4 +234,6 @@ python -u run.py \
   --num_moe_prefix_experts 2 \
   --prefix_len 4 \
   --lam_prefix_moe 0.001 \
+  --freq_num 4 \
+  --result_file "result_Fusion.txt" \
   --itr 1
