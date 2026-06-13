@@ -3,7 +3,7 @@ import torch
 from models import PatchTST, SimpleTM, iTransformer, TimeMixer, FreTS, WPMixer, DLinear, TimesNet,\
             Duet, PatchMLP, TimeFilter, xPatch, PathFormer, TimeMixerPP, Autoformer, FEDformer, \
             Informer, LightTS, Reformer, ETSformer, Pyraformer, MICN, Crossformer, TiDE, TSMixer, \
-            SegRNN, SCINet, TimeMosaic, Mosaic, TimeMosaic_new, \
+            SegRNN, SCINet, TimeMosaic, Mosaic, TimeMosaic_MIM, \
             TimeMosaic_MoE, TimeMosaic_Fusion
 
 class Exp_Basic(object):
@@ -39,7 +39,7 @@ class Exp_Basic(object):
             'SegRNN': SegRNN,
             "SCINet": SCINet,
             "TimeMosaic": TimeMosaic,
-            "TimeMosaic_new": TimeMosaic_new,
+            "TimeMosaic_MIM": TimeMosaic_MIM,
             "TimeMosaic_MoE": TimeMosaic_MoE,
             "TimeMosaic_Fusion": TimeMosaic_Fusion,
             }

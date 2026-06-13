@@ -1,12 +1,12 @@
-model_name=TimeMosaic_new
+model_name=TimeMosaic_MIM
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_96 \
-  --model TimeMosaic_new \
+  --model TimeMosaic_MIM \
   --data custom \
   --features M \
   --channel CDA \
@@ -25,12 +25,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_192 \
-  --model TimeMosaic_new \
+  --model TimeMosaic_MIM \
   --data custom \
   --features M \
   --channel CDA \
@@ -49,12 +49,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_336 \
-  --model TimeMosaic_new \
+  --model TimeMosaic_MIM \
   --data custom \
   --features M \
   --channel CDA \
@@ -73,12 +73,12 @@ python -u run.py \
   --train_epochs 10
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/weather/ \
   --data_path weather.csv \
   --model_id weather_320_720 \
-  --model TimeMosaic_new \
+  --model TimeMosaic_MIM \
   --data custom \
   --features M \
   --channel CDA \

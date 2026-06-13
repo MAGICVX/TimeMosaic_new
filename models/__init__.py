@@ -27,7 +27,7 @@ from . import SegRNN
 from . import SCINet
 from . import TimeMosaic
 from . import Mosaic
-from . import TimeMosaic_new
+from . import TimeMosaic_MIM
 from . import TimeMosaic_Fusion
 
 

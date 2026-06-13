@@ -1,7 +1,7 @@
 model_name=TimeMosaic
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
@@ -23,7 +23,7 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
@@ -46,7 +46,7 @@ python -u run.py \
   --itr 1
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \
@@ -69,7 +69,7 @@ python -u run.py \
   --itr 1 
 
 python -u run.py \
-  --task_name TimeMosaic_new \
+  --task_name Exp_TimeMosaic_MIM \
   --is_training 1 \
   --root_path ./dataset/exchange_rate/ \
   --data_path exchange_rate.csv \

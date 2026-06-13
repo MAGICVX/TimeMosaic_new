@@ -4,7 +4,7 @@ import torch
 import torch.backends
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 from exp.exp_TimeMosaic import Exp_TimeMosaic
-from exp.exp_new import Exp_TimeMosaic as Exp_TimeMosaic_new
+from exp.exp_TimeMosaic_MIM import Exp_TimeMosaic as Exp_TimeMosaic_MIM
 from exp.exp_TimeMosaic_MoE import Exp_TimeMosaic_MoE
 from exp.exp_Fusion import Exp_Fusion
 from exp.exp_TimeFilter import Exp_TimeFilter
@@ -236,8 +236,8 @@ if __name__ == '__main__':
         Exp = Exp_TimeMosaic_MoE
     elif args.task_name == 'Exp_Fusion':
         Exp = Exp_Fusion
-    elif args.task_name == 'TimeMosaic_new':
-        Exp = Exp_TimeMosaic_new
+    elif args.task_name == 'Exp_TimeMosaic_MIM':
+        Exp = Exp_TimeMosaic_MIM
     else:
         Exp = Exp_TimeMosaic
 
