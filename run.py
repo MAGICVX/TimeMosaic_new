@@ -130,7 +130,6 @@ if __name__ == '__main__':
                         help='Number of prefix tokens per layer for K/V injection')
     parser.add_argument('--lam_prefix_moe', type=float, default=0.001,
                         help='Weight of MoE prefix load balancing loss')
-                        help='Number of spectral views (0=disable spectral decomposition)')
     parser.add_argument('--use_prefix', type=int, default=1,
                         help='Enable prefix attention K/V injection (0/1)')
     parser.add_argument('--lam_entropy', type=float, default=0.03,
