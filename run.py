@@ -130,7 +130,6 @@ if __name__ == '__main__':
                         help='Number of prefix tokens per layer for K/V injection')
     parser.add_argument('--lam_prefix_moe', type=float, default=0.001,
                         help='Weight of MoE prefix load balancing loss')
-    parser.add_argument('--freq_num', type=int, default=4,
                         help='Number of spectral views (0=disable spectral decomposition)')
     parser.add_argument('--use_prefix', type=int, default=1,
                         help='Enable prefix attention K/V injection (0/1)')
@@ -255,8 +254,6 @@ if __name__ == '__main__':
                     getattr(args, 'num_moe_prefix_experts', 4),
                     getattr(args, 'prefix_len', 4),
                     getattr(args, 'lam_prefix_moe', 0.001))
-            if args.task_name == 'Exp_Fusion' and getattr(args, 'freq_num', 4) != 4:
-                setting += '_freq{}'.format(getattr(args, 'freq_num', 4))
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
 
             exp.train(setting)

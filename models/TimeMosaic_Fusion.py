@@ -266,14 +266,13 @@ class Model(nn.Module):
         self.channel = configs.channel
 
         # ── Spectral decomposition (SEMPO) ──
-        self.freq_num = getattr(configs, 'freq_num', 4)
-        if self.freq_num > 0:
-            self.freq_len = configs.seq_len // 2 + 1
-            self.theta = nn.Parameter(torch.rand(1))
-            self.tau_main = nn.Parameter(torch.rand(self.freq_num) * (configs.seq_len // 2 + 1))
-            self.mu_main = nn.Parameter(torch.bernoulli(torch.full((self.freq_num, self.freq_len), 0.5)))
-            self.tau_res = nn.Parameter(torch.rand(self.freq_num) * (configs.seq_len // 2 + 1))
-            self.mu_res = nn.Parameter(torch.bernoulli(torch.full((self.freq_num, self.freq_len), 0.5)))
+        self.freq_num = 4
+        self.freq_len = configs.seq_len // 2 + 1
+        self.theta = nn.Parameter(torch.rand(1))
+        self.tau_main = nn.Parameter(torch.rand(self.freq_num) * (configs.seq_len // 2 + 1))
+        self.mu_main = nn.Parameter(torch.bernoulli(torch.full((self.freq_num, self.freq_len), 0.5)))
+        self.tau_res = nn.Parameter(torch.rand(self.freq_num) * (configs.seq_len // 2 + 1))
+        self.mu_res = nn.Parameter(torch.bernoulli(torch.full((self.freq_num, self.freq_len), 0.5)))
         self.num_views = self.freq_num + 1  # raw + freq_num freq views
 
         # ── Adaptive patching (shared across views) ──
@@ -418,8 +417,7 @@ class Model(nn.Module):
         B, C = x_enc.shape[0], x_enc.shape[2]
 
         # ── Spectral decomposition + multi-view patching ──
-        if self.freq_num > 0:
-            x_freq = self.decomposed_frequency_learning(x_enc)  # [F, B, T, C]
+        x_freq = self.decomposed_frequency_learning(x_enc)  # [F, B, T, C]
         all_patches = []
         cls_preds = []
 
