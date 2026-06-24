@@ -283,7 +283,7 @@ class Exp_Fusion(Exp_Basic):
 
         mae, mse, rmse, mape, mspe, _ = metric(preds, trues)
         print('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
-        f = open("result_TimeMosaic_Fusion.txt", 'a')
+        f = open(self.args.result_file, 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
         f.write('\n')
