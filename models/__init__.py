@@ -29,5 +29,7 @@ from . import TimeMosaic
 from . import Mosaic
 from . import TimeMosaic_MIM
 from . import TimeMosaic_Fusion
+from . import TimeMosaic_FusionV2
+from . import TimeMosaic_FusionV3
 
 

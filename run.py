@@ -7,6 +7,8 @@ from exp.exp_TimeMosaic import Exp_TimeMosaic
 from exp.exp_TimeMosaic_MIM import Exp_TimeMosaic as Exp_TimeMosaic_MIM
 from exp.exp_TimeMosaic_MoE import Exp_TimeMosaic_MoE
 from exp.exp_Fusion import Exp_Fusion
+from exp.exp_FusionV2 import Exp_FusionV2
+from exp.exp_FusionV3 import Exp_FusionV3
 from exp.exp_TimeFilter import Exp_TimeFilter
 from exp.exp_PathFormer import Exp_PathFormer
 from exp.exp_DUET import Exp_DUET
@@ -122,6 +124,8 @@ if __name__ == '__main__':
     parser.add_argument('--counts', type=int, default=0, help='')
     parser.add_argument('--num_moe_experts', type=int, default=8,
                         help='Number of virtual experts per segment in MoE prompt generator')
+    parser.add_argument('--use_prompt_moe', type=int, default=1,
+                        help='Enable MoE prompt generator (0=static prompts, lighter)')
     parser.add_argument('--lam_moe', type=float, default=0.001,
                         help='Weight of MoE load balancing loss')
     parser.add_argument('--num_moe_prefix_experts', type=int, default=4,
@@ -134,12 +138,34 @@ if __name__ == '__main__':
                         help='Number of spectral views (0=disable spectral decomposition)')
     parser.add_argument('--use_prefix', type=int, default=1,
                         help='Enable prefix attention K/V injection (0/1)')
+    parser.add_argument('--use_reconstruct', type=int, default=1,
+                        help='Enable reconstruction auxiliary loss (0/1)')
     parser.add_argument('--lam_entropy', type=float, default=0.03,
                         help='Weight of entropy regularization loss')
     parser.add_argument('--lam_diversity', type=float, default=0.008,
                         help='Weight of region diversity loss')
     parser.add_argument('--lam_orthogonal', type=float, default=0.01,
                         help='Weight of orthogonal loss on prompt embeddings')
+
+    # FusionV2 — DRoPE + LogDecay + MoE bias
+    parser.add_argument('--use_drope', type=int, default=1,
+                        help='Enable DRoPE (instance-wise rotary PE, 0/1)')
+    parser.add_argument('--rope_feature_dim', type=int, default=128,
+                        help='FFT spectral feature dim for DRoPE')
+    parser.add_argument('--use_log_decay', type=int, default=1,
+                        help='Enable log-decay time weighting on forecast loss (0/1)')
+    parser.add_argument('--moe_bias_rate', type=float, default=0.001,
+                        help='MoE learnable bias update rate (prefix load balancing)')
+    parser.add_argument('--lam_reconstruct', type=float, default=0.1,
+                        help='Weight of reconstruction auxiliary loss')
+
+    # FusionV3 — MoS hierarchical patching
+    parser.add_argument('--mos_levels', type=int, default=3,
+                        help='MoS granularity levels (e.g. 3 -> 32/16/8)')
+    parser.add_argument('--mos_max_patch_len', type=int, default=32,
+                        help='MoS initial/max patch length')
+    parser.add_argument('--mos_update_bias_rate', type=float, default=0.001,
+                        help='MoS gate learnable bias update rate')
 
     # SimpleTM
     parser.add_argument('--kernel_size', default=None, help='Specify the length of randomly initialized wavelets (if not None)')
@@ -236,6 +262,10 @@ if __name__ == '__main__':
         Exp = Exp_TimeMosaic_MoE
     elif args.task_name == 'Exp_Fusion':
         Exp = Exp_Fusion
+    elif args.task_name == 'Exp_FusionV2':
+        Exp = Exp_FusionV2
+    elif args.task_name == 'Exp_FusionV3':
+        Exp = Exp_FusionV3
     elif args.task_name == 'Exp_TimeMosaic_MIM':
         Exp = Exp_TimeMosaic_MIM
     else:
@@ -255,8 +285,29 @@ if __name__ == '__main__':
                     getattr(args, 'num_moe_prefix_experts', 4),
                     getattr(args, 'prefix_len', 4),
                     getattr(args, 'lam_prefix_moe', 0.001))
-            if args.task_name == 'Exp_Fusion' and getattr(args, 'freq_num', 4) != 4:
-                setting += '_freq{}'.format(getattr(args, 'freq_num', 4))
+            if args.task_name == 'Exp_Fusion':
+                if getattr(args, 'freq_num', 4) != 4:
+                    setting += '_freq{}'.format(getattr(args, 'freq_num', 4))
+                if getattr(args, 'use_reconstruct', 1) != 1:
+                    setting += '_noRecon'
+                if getattr(args, 'use_prefix', 1) != 1:
+                    setting += '_noPrefix'
+                if getattr(args, 'patch_len_list', '[8,16,32]') != '[8,16,32]':
+                    setting += '_pl{}'.format(getattr(args, 'patch_len_list', '[8,16,32]'))
+            if args.task_name == 'Exp_FusionV2':
+                setting += '_V2'
+                if not getattr(args, 'use_drope', True):
+                    setting += '_noDRoPE'
+                if not getattr(args, 'use_log_decay', True):
+                    setting += '_noLogDecay'
+            if args.task_name == 'Exp_FusionV3':
+                setting += '_V3_mosL{}_mosP{}'.format(
+                    getattr(args, 'mos_levels', 3),
+                    getattr(args, 'mos_max_patch_len', 32))
+                if not getattr(args, 'use_drope', True):
+                    setting += '_noDRoPE'
+                if not getattr(args, 'use_prefix', True):
+                    setting += '_noPrefix'
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
 
             exp.train(setting)
@@ -282,6 +333,10 @@ if __name__ == '__main__':
         setting = '{}_{}_{}_{}_fixed{}_{}_{}_{}'.format(args.task_name, args.model_id, args.model,
                                                         args.d_ff, args.fixed_weight, args.learning_rate,
                                                         args.scale_rate, args.channel)
+        if args.task_name == 'Exp_FusionV3':
+            setting += '_V3_mosL{}_mosP{}'.format(
+                getattr(args, 'mos_levels', 3),
+                getattr(args, 'mos_max_patch_len', 32))
         exp = Exp(args)
         if args.visualize_attn:
             print(f'>>>>>>>visualizing attention : {setting}<<<<<<<<<<<<<<<<<<<')
